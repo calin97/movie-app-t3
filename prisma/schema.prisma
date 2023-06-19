@@ -119,9 +119,9 @@ model Movie {
     description   String
     ratingStars   Int       @default(0)
     director      String
-    userId        String 
+    userId        String? 
 
-    addedBy       User      @relation("addedMovies", fields: [userId], references: [id])
+    addedBy       User?      @relation("addedMovies", fields: [userId], references: [id])
     genre         MovieGenre[]
     usersThatWatchListed User[] @relation("watchListedMovies")
     reviews       Review[]
