@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+    provider = "sqlite"
+    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+    // Further reading:
+    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    url      = env("DATABASE_URL")
+}
+
+model Example {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+}
+
+// Necessary for Next auth
+model Account {
+    id                String  @id @default(uuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? // @db.Text
+    access_token      String? // @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? // @db.Text
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+}
+
+model Session {
+    id           String   @id @default(uuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+}
+
+model User {
+    id            String    @id @default(uuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+
+    accounts      Account[]
+    sessions      Session[]
+    watchListedMovies Movie[]  @relation("watchListedMovies")
+    reviews       Review[]
+    addedMovies   Movie[]   @relation("addedMovies")
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+}
+
+
+
+// =================================================MOVIE DB====================================
+// enum MovieGenre {
+//     Comedy
+//     Drama
+//     Fantasy
+//     Horror
+//     Mystery
+//     Romance
+//     Thriller
+//     Western
+//     Animation
+// }
+
+model MovieGenre {
+    id            String    @id @default(uuid())
+    title         String    @unique
+
+    movies        Movie[]
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+}
+
+model Movie {
+    id            String    @id @default(uuid())
+    title         String    @unique
+    lengthInMinutes Int
+    releaseYear   String
+    imgLink       String
+    description   String
+    ratingStars   Int       @default(0)
+    director      String
+    userId        String 
+
+    addedBy       User      @relation("addedMovies", fields: [userId], references: [id])
+    genre         MovieGenre[]
+    usersThatWatchListed User[] @relation("watchListedMovies")
+    reviews       Review[]
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+}
+
+model Review {
+    id            String    @id @default(uuid())
+    description   String
+    ratingStars   Int       @default(0)
+
+    userId        String 
+    user          User      @relation(fields: [userId], references: [id])
+
+    movieId       String
+    movie         Movie     @relation(fields: [movieId], references: [id])
+
+    created_at             DateTime                      @default(now())
+    updated_at             DateTime                      @updatedAt
+
+}
+
+
+
+
+
