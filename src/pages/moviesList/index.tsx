@@ -7,10 +7,11 @@ export default function HomePage() {
 
   return isFetched && !isLoading ? (
     <>
-      {" "}
-      {movies.map((movie) => (
-        <MovieItem key={movie.id} movie={movie} />
-      ))}
+      <div className="px-48">
+        {movies.map((movie) => (
+          <MovieItem key={movie.id} movie={movie} />
+        ))}
+      </div>
     </>
   ) : (
     <>loading</>

@@ -1,3 +1,66 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .content-fit {
+    padding: 0, 48, 0, 48;
+  }
+
+  /* header-button */
+  .header-button {
+    background-color: black;
+    border: 1px solid #ffa559;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+    font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont,
+      sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    outline: none;
+    outline: 0;
+    /* padding: 10px 25px; */
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .header-button:hover {
+    box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
+    transform: translateY(-2px);
+    transition: all;
+    transition-duration: 300ms;
+    background-color: white;
+    color: #ffa559;
+  }
+
+  @media (min-width: 768px) {
+    .header-button {
+      padding: 10px 30px;
+    }
+  }
+}
+
+/* home background */
+
+.background-img {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  filter: blur(2px);
+}

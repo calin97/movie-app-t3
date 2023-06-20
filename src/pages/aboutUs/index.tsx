@@ -1,5 +1,9 @@
 function AboutUs() {
-  return <>salut about us</>;
+  return (
+    <>
+      <div className="px-48">about us page</div>
+    </>
+  );
 }
 
 export default AboutUs;

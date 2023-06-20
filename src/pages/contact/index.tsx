@@ -1,5 +1,9 @@
 function Contact() {
-  return <>contact PAGEEEEEEEEEEEEEE</>;
+  return (
+    <>
+      <div className="px-48">contact us page</div>
+    </>
+  );
 }
 
 export default Contact;
