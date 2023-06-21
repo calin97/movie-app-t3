@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <>
-      <div className="px-48">sunt un footer</div>
+      <div className="flex bg-white-main px-48">sunt un footer</div>
     </>
   );
 }
