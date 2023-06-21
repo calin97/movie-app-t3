@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import NavbarLink from "./navbarLink";
-import { HeaderLinkInfo, HeaderLinkInfos } from "~/frontendRouts";
-import { cx } from "~/utils/cx";
+import { HeaderLinkInfos } from "~/frontendRouts";
+// import { cx } from "~/utils/cx";
+import { api } from "~/utils/api";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Navbar() {
   const [activeHeaderLinkId, setActiveHeaderLinkId] = useState("home");
+  const { data: sessionData } = useSession();
   console.log(HeaderLinkInfos);
+  const {
+    data: user,
+    isLoading,
+    isFetched,
+  } = api.user.getMe.useQuery(
+    undefined, // no input
+    { enabled: sessionData?.user !== undefined }
+  );
+
+  const isLoggedIn = useMemo(
+    () => !isLoading && isFetched,
+    [isFetched, isLoading]
+  );
+
   return (
     <>
       <div className="flex h-16 w-full justify-between bg-black px-48">
@@ -26,11 +43,22 @@ function Navbar() {
           ))}
         </div>
         <div className=" flex items-center gap-x-5 text-white-main ">
-          <div>
+          <p className="text-white text-center text-2xl">
+            {isLoggedIn && <span>Logged in as {user?.name}</span>}
+          </p>
+          {/* <div>
             <button className="header-button">Log In</button>
-          </div>
+          </div> */}
           <div>
-            <button className="header-button">Sign Up</button>
+            <button
+              className="header-button"
+              onClick={sessionData ? () => void signOut() : () => void signIn()}
+            >
+              {isLoggedIn ? "Sign Out" : "Sign In"}
+            </button>
+          </div>
+          <div className="">
+            <img src={user?.image}></img>
           </div>
         </div>
       </div>

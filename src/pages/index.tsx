@@ -33,6 +33,7 @@ export default function Home() {
             <div className="mt-10 flex justify-between p-10">
               <button className="generic-button">GO TO MOVIELIST</button>
               <button className="generic-button">REGISTER NOW</button>
+              {/* <AuthShowcase /> */}
             </div>
           </div>
         </div>
