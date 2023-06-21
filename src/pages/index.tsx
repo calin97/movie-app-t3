@@ -8,6 +8,7 @@ export default function Home() {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
   const { data: movies } = api.movies.getAll.useQuery();
   console.log(movies);
+  const { data: sessionData } = useSession();
 
   return (
     <>
@@ -32,7 +33,12 @@ export default function Home() {
             </Text>
             <div className="mt-10 flex justify-between p-10">
               <button className="generic-button">GO TO MOVIELIST</button>
-              <button className="generic-button">REGISTER NOW</button>
+              <button
+                className="generic-button"
+                onClick={sessionData ? () => void "" : () => void signIn()}
+              >
+                REGISTER NOW
+              </button>
               {/* <AuthShowcase /> */}
             </div>
           </div>

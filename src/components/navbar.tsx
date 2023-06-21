@@ -42,13 +42,21 @@ function Navbar() {
             />
           ))}
         </div>
-        <div className=" flex items-center gap-x-5 text-white-main ">
-          <p className="text-white text-center text-2xl">
-            {isLoggedIn && <span>Logged in as {user?.name}</span>}
+        <div className=" flex h-16 items-center gap-x-5 text-white-main ">
+          <p className="text-white text-center text-xs">
+            {isLoggedIn && <span>Logged in as: {user?.name}</span>}
           </p>
           {/* <div>
             <button className="header-button">Log In</button>
           </div> */}
+          <div className=" flex h-full w-16 items-center">
+            <div className=" flex h-3/4 justify-center">
+              <img
+                className="rounded-full object-scale-down p-1"
+                src={user?.image}
+              ></img>
+            </div>
+          </div>
           <div>
             <button
               className="header-button"
@@ -56,9 +64,6 @@ function Navbar() {
             >
               {isLoggedIn ? "Sign Out" : "Sign In"}
             </button>
-          </div>
-          <div className="">
-            <img src={user?.image}></img>
           </div>
         </div>
       </div>
